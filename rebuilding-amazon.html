@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Rebuilding Amazon</title>
+  <link rel="stylesheet" href="../zzz_lib/styles.css">
+  <link rel="stylesheet" href="../zzz_lib/railscasts.css">
+  <style>
+  pre, code{
+    display: inline-block;
+    }</style>
+</head>
+
+<body>
+  <div id="container">
+    <h1>Rebuilding Amazon</h1>
+    <section>
+      <p>Today we will build a new hot startup to compete with Amazon.com</p>
+      <ol>
+        <li>To start, create an HTML document. Include <a href="code.jquery.com/jquery-2.1.1.js">jQuery</a> and <a href="http://getbootstrap.com/getting-started/#download">Bootstrap</a> (or another css framework) if you'd like.</li>
+        <li>Set up your HTML document such that there is a header, a nav bar, a content area, and a footer.</li>
+        <li>Inside the content area create div#book1, div#book2, div#book3 and place information about a book for sale in each. Each product should have the following properties:
+        <ul>
+          <li>name</li>
+          <li>category</li>
+          <li>price</li>
+          <li>description</li>
+          <li>picture</li>
+          <li>a list of selling points</li>
+        </ul>
+        <li>Give the outermost div an id of the book's name and a class based on its category as well as a general class of 'product'. i.e &lt;div id='twilight' class='book product'&gt; Give the inner HTML elements the appropriate class to match the information they hold (i.e div.name, div.category, div.price, etc)
+        </li>
+        <li>Now create a second identical page with three music albums for sale. Link the two pages together in the nav bar. So that the user can click back and forth between books and music.</li>
+        <li>Now add some content to the footer. Notice that we had to do this same work in two different places. As the complexity of an application grows, having to keep information in sync like this isn't just tedious, it leads to big problems if we update information in one place but forget to update the other. The rule is <a href="https://en.wikipedia.org/wiki/Abstraction_principle_(computer_programming)">Don't Repeat Yourself!</a></li>
+      </ol>
+        <p>Now, let's refactor this page to be a <a href="https://en.wikipedia.org/wiki/Single-page_application">Single Page Application</a> (i.e. We load all of the HTML, CSS, and JS once, and then dynamically change the page state using JS).</p>
+  <ol>
+    <li>First copy the HTML that shows the three albums into the content area on the books page so that we have books and music together.</li>
+    <li>Now take all the information about our books and music and make them into JavaScript objects. Create variables `book1`, `book2`, `book3`, and `album1`, `album2`, `album3`. Set each equal to an object with keys `name`, `category`, `description`, and `pictureUrl` which hold string values, `price` which holds a number value, and `sellingPoints` which is an array of strings.</li>
+    <li>Leaving the HTML tags intact, remove the text (and image src) about each product from the HTML. Now use jQuery to add the information about each product back onto the page immediately upon page load. So: <pre><code class="javascript">$('#book1 .name').text(book1.name);</code></pre>, etc.</li>
+    <li>Refactor your code so that you can call a function <pre><code class="javascript">addToPage(book1);</code></pre>, passing in an object, and that object will be constructed into html added to the page. Now you should just call addToPage for each product and the addToPage function will do all the work for you.</li>
+    <li>Make sure each book or album's div has the appropriate class and id attributes generated for it. You should not have to change any css while refactoring.</li>
+    <li>Refactor your code such that the content div is completely empty on page load, and addToPage constructs and appends new HTML elements into it. So: <pre><code class="javascript">$('#content').append($('&lt;div id=book1&gt;').html( $('&lt;div class=name&gt;').text(book1.name)));</code></pre>, etc.</li>
+    <li>Now add click events to the nav bar such that when the user clicks "books" the information about books is placed on the page, but the albums are removed and vice versa. (use `$('#content').empty();` before adding new content, don't just hide it).</li>
+    <li>Now refactor your code so that your products are no longer stored as seperate variables book1, book2, etc, but rather as an array of book objects and array of album objects. Make sure your nav bar switching still works.</li>
+    <li>At this point you should be able to add more books and albums to your arrays and not have to change a single line of code to have your page still work. Check to see if this is the case. If not, make it so.</li>
+    <li>Now refactor your code such that you have only a single object called "products" with keys "books" and "albums" whose values are arrays of book and album objects respectively. Make sure your nav bar switching still works.</li>
+
+  </ol>
+
+  <h4>Hard Mode:</h4>
+  <ol>
+  <li>Refactor the nav bar to use a dropdown menu instead of links. Use the <a href="http://api.jquery.com/change/">.change()</a> event listener and observe the selected value to know what products to display.</li>
+  <li>Add a search box. Show only products whose names, descriptions or features include that word. Hint: <pre><code class="javascript">!!bookName.match(userInput)</code></pre></li>
+  <li>Refactor your code such that you use <pre><code class="javascript">var categories = Object.keys(products);</code></pre> and construct the dropdown menu from the resultant array. See if you can remove all hardcoded references to the words "books" and "albums" from your code. You will know you are successful if you can add a third property to your 'products' object ('electronics' maybe, with an array of products as a value) and not have to change a single line of code to have your page still work.</li>
+  </ol>
+    </section>
+  </div>
+  <script>
+    // Rebuilding Amazon
+    // =================================================
+  </script>
+
+  <script src="../zzz_lib/jquery.js"></script>
+  <script src="../zzz_lib/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+</body>
+
+</html>

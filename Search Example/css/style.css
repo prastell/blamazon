@@ -1,0 +1,23 @@
+.price {
+  color: red;
+}
+
+.picture img{
+  max-width: 130px;
+  max-height: 150px;
+  float:left;
+  padding-right: 20px;
+}
+
+
+.product {
+  clear: both;
+  padding-top: 20px;
+}
+
+.product .name {
+  font-weight: bold;
+}
+.jumbotron {
+  background: url(https://s-media-cache-ak0.pinimg.com/originals/c4/be/75/c4be753e637997135b31e085e74450f3.jpg) no-repeat fixed;
+}
